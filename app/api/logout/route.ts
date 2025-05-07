@@ -1,8 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-  // Create a response that will clear the cookie
-  const response = NextResponse.json({ success: true });
+  // Create a redirect response to the login page
+  const response = NextResponse.redirect(new URL("/login", request.url));
 
   // Clear the token cookie
   response.cookies.delete("token");
