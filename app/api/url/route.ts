@@ -1,9 +1,9 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server";
 
 // This is a placeholder API route that connects to your Express.js backend
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
+    const body = await request.json();
 
     // In a real implementation, you would:
     // 1. Forward the request with cookies to your Express.js backend
@@ -19,12 +19,15 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify(body),
       credentials: "include",
-    })
+    });
 
-    const data = await response.json()
-    return NextResponse.json(data, { status: response.status })
+    const data = await response.json();
+    return NextResponse.json(data, { status: response.status });
   } catch (error) {
-    console.error("URL creation error:", error)
-    return NextResponse.json({ error: "Failed to create shortened URL" }, { status: 500 })
+    console.error("URL creation error:", error);
+    return NextResponse.json(
+      { error: "Failed to create shortened URL" },
+      { status: 500 }
+    );
   }
 }

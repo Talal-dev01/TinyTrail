@@ -87,28 +87,15 @@ export default function Home() {
       return;
     }
 
-    if (!isAuthenticated) {
-      toast({
-        title: "Authentication required",
-        description: "Please log in to shorten URLs",
-        variant: "destructive",
-      });
-      router.push("/login");
-      return;
-    }
-
     setIsLoading(true);
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/url`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ url: url }),
-          credentials: "include",
-        }
-      );
+      const response = await fetch("/api/url", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: url }),
+        credentials: "include",
+      });
 
       if (!response.ok) {
         throw new Error("Failed to shorten URL");
@@ -303,7 +290,7 @@ export default function Home() {
           )}
         </motion.div>
 
-        {urlsLoading && (
+        {isAuthenticated && urlsLoading && (
           <div className="flex flex-col justify-center items-center h-24">
             <div className="h-8 w-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mb-3" />
             <span className="text-slate-300 text-sm">
