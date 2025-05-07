@@ -27,13 +27,12 @@ export async function POST(request: NextRequest) {
       status: response.status,
     });
 
-    // Get the Set-Cookie header from the backend response
-    console.log(response.headers.get("set-cookie"));
-    const setCookieHeader = response.headers.get("set-cookie");
-
-    if (setCookieHeader) {
-      // Set the cookie in the Next.js response
-      nextResponse.headers.set("Set-Cookie", setCookieHeader);
+    // Get all Set-Cookie headers from the backend response
+    const cookies = response.headers.get("set-cookie");
+    console.log(cookies, "cookies");
+    if (cookies) {
+      // Set each cookie in the Next.js response
+      nextResponse.headers.append("Set-Cookie", cookies);
     }
 
     return nextResponse;

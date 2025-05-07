@@ -48,6 +48,8 @@ export default function LoginPage() {
         description: "Redirecting to dashboard...",
       });
 
+      // Add a small delay to ensure cookie is set
+      await new Promise((resolve) => setTimeout(resolve, 100));
       // Redirect to home page
       router.push("/");
     } catch (error) {
