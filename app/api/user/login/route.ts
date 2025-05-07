@@ -28,6 +28,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Get the Set-Cookie header from the backend response
+    console.log(response.headers.get("set-cookie"));
     const setCookieHeader = response.headers.get("set-cookie");
 
     if (setCookieHeader) {
