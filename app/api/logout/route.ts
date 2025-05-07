@@ -1,11 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-  // Create a redirect response to the login page
   const response = NextResponse.redirect(new URL("/login", request.url));
 
-  // Properly remove the token cookie by setting it to expire
-  response.cookies.set({
+  // Build cookie options
+  const cookieOptions: any = {
     name: "token",
     value: "",
     expires: new Date(0),
@@ -13,7 +12,14 @@ export async function GET(request: NextRequest) {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
-  });
+  };
+
+  // Only set domain in production
+  if (process.env.NODE_ENV === "production") {
+    cookieOptions.domain = "shortlyfy.vercel.app";
+  }
+
+  response.cookies.set(cookieOptions);
 
   return response;
 }
