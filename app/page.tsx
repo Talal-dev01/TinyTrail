@@ -157,7 +157,7 @@ export default function Home() {
             <NextLink href="/" className="flex items-center gap-2">
               {/* <NextLink className="h-8 w-8 text-purple-400" /> */}
               <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-                TinyTrail
+                Shortsy
               </h1>
             </NextLink>
           </motion.div>
@@ -401,7 +401,7 @@ export default function Home() {
           className="mt-16 text-center"
         >
           <p className="text-slate-400 text-sm">
-            © {new Date().getFullYear()} TinyTrail. All rights reserved.
+            © {new Date().getFullYear()} Shortsy. All rights reserved.
           </p>
         </motion.div>
       </div>
