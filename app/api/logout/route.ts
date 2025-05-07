@@ -4,8 +4,16 @@ export async function GET(request: NextRequest) {
   // Create a redirect response to the login page
   const response = NextResponse.redirect(new URL("/login", request.url));
 
-  // Clear the token cookie
-  response.cookies.delete("token");
+  // Properly remove the token cookie by setting it to expire
+  response.cookies.set({
+    name: "token",
+    value: "",
+    expires: new Date(0),
+    path: "/",
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+  });
 
   return response;
 }
