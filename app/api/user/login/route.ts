@@ -17,22 +17,25 @@ export async function POST(request: NextRequest) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
+      credentials: "include", // Add this line
     });
 
     const data = await response.json();
 
-    // Forward any cookies from the backend
-    const responseHeaders = new Headers();
-    response.headers.forEach((value, key) => {
-      if (key.toLowerCase() === "set-cookie") {
-        responseHeaders.append("Set-Cookie", value);
-      }
+    // Create a new response with the data
+    const nextResponse = NextResponse.json(data, {
+      status: response.status,
     });
 
-    return NextResponse.json(data, {
-      status: response.status,
-      headers: responseHeaders,
-    });
+    // Get the Set-Cookie header from the backend response
+    const setCookieHeader = response.headers.get("set-cookie");
+
+    if (setCookieHeader) {
+      // Set the cookie in the Next.js response
+      nextResponse.headers.set("Set-Cookie", setCookieHeader);
+    }
+
+    return nextResponse;
   } catch (error) {
     console.error("Login error:", error);
     return NextResponse.json({ error: "Login failed" }, { status: 500 });
